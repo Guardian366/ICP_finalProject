@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -49,6 +50,11 @@ public class StudentBooksGUI extends javax.swing.JFrame {
 
         jButton2.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
         jButton2.setText("Available");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         label1.setAlignment(java.awt.Label.CENTER);
         label1.setText("What would you like to view?");
@@ -86,22 +92,36 @@ public class StudentBooksGUI extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        DB con = new DB();
-        PreparedStatement ps = null;
-        try {
-            ps = con.con.prepareStatement("select* from Borrowed");
-        } catch (SQLException ex) {
-            Logger.getLogger(StudentBooksGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
-            ResultSet rs = ps.executeQuery();
-        } catch (SQLException ex) {
-            Logger.getLogger(StudentBooksGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        StudentUI su = new StudentUI();
+        su.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        
+        
+        try { 
+            DB con = new DB();
+            PreparedStatement ps = con.con.prepareStatement("select* from Books where NumAvailable > "+ 0);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                String title = rs.getString("title");
+                String Avail = rs.getString("NumAvailable");
+                String Aut = rs.getString("Author");
+                
+                JOptionPane.showMessageDialog(null, "Book: " + title + "  Number Available: " + Avail  +"  Author: "+ Aut);
+                /*System.out.println(title);
+                System.out.println(Avail);
+                System.out.println(Aut);*/
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(StudentBooksGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }//con.con.close();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
+     * 
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

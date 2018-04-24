@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -88,21 +89,25 @@ public class StudentUI extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        int i = Integer.parseInt(IDnum.getText());
         try {
-            int i = Integer.parseInt(IDnum.getText());
             DB con = new DB(); 
-            PreparedStatement ps= con.con.prepareStatement("select * from Students where sID = " + i + " ");
-            ResultSet rs = ps.executeQuery();    
+            PreparedStatement ps = con.con.prepareStatement("select * from Borrowed where StudID = " + i);
+            ResultSet rs = ps.executeQuery();   
+            System.out.println("Your Borrowing Information is as follows: ");
             
-            if (rs.next()==true){
-                StudentBooksGUI sb = new StudentBooksGUI();
-                sb.setVisible(true);
+            if(rs.next()== true){
+                String BkTitle = rs.getString("bookTitle");
+                String doRt = rs.getString("dateOfReturn");
+                
+                JOptionPane.showMessageDialog(null,""+BkTitle + " to be returned on " + doRt);
+                System.out.println();
             }
+            else{
+                    JOptionPane.showMessageDialog(null, "Student does not exist in database");
+                    }con.con.close();
         }
-        catch (NumberFormatException e){
-            System.out.println("Invalid Input!");
-                    
-        } catch (SQLException ex) {
+        catch (SQLException ex) {
             Logger.getLogger(StudentUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed

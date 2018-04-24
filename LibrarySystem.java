@@ -16,7 +16,9 @@ public class LibrarySystem {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        About ab =  new About();
         IntentForm iF = new IntentForm();
+        iF.setVisible(true);
     }
     
 }
