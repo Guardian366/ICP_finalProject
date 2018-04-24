@@ -1,8 +1,14 @@
 package icpfinalproject;
 
+import java.awt.BorderLayout;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.util.Vector;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -15,7 +21,7 @@ import javax.swing.JOptionPane;
  * @author wiafe
  */
 public class LibrarianOption extends javax.swing.JFrame {
-
+    
     /**
      * Creates new form LibrarianOptions
      */
@@ -38,6 +44,7 @@ public class LibrarianOption extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jButton6 = new javax.swing.JButton();
 
         jButton2.setText("jButton2");
 
@@ -51,8 +58,18 @@ public class LibrarianOption extends javax.swing.JFrame {
         });
 
         jButton3.setText("View Issued Books");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("Return Book ");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("Exit");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -62,6 +79,13 @@ public class LibrarianOption extends javax.swing.JFrame {
         });
 
         jLabel1.setText("Librarian Page");
+
+        jButton6.setText("Add a new book");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -77,12 +101,14 @@ public class LibrarianOption extends javax.swing.JFrame {
                         .addGap(22, 22, 22)))
                 .addGap(161, 161, 161))
             .addGroup(layout.createSequentialGroup()
-                .addGap(132, 132, 132)
-                .addComponent(jButton3)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1)
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(132, 132, 132)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton6)
+                    .addComponent(jButton3))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -90,9 +116,11 @@ public class LibrarianOption extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(32, 32, 32)
                 .addComponent(jButton1)
-                .addGap(44, 44, 44)
+                .addGap(18, 18, 18)
                 .addComponent(jButton3)
-                .addGap(37, 37, 37)
+                .addGap(18, 18, 18)
+                .addComponent(jButton6)
+                .addGap(22, 22, 22)
                 .addComponent(jButton4)
                 .addGap(36, 36, 36)
                 .addComponent(jButton5)
@@ -109,25 +137,27 @@ public class LibrarianOption extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        try{
-                        DB con =  new DB();
-			PreparedStatement ps= con.con.prepareStatement("Select * from Books");
-			ResultSet rs=ps.executeQuery();
-                        
-			while ( rs.next()){
-                            int bookNumber = rs.getInt("bNum");
-                            String bookTitle = rs.getString("title");
-                            String author = rs.getString("Author");
-                            int numAvailable = rs.getInt("NumAvailable");
-                            int numBorrowed = rs.getInt("BorrowedBooks");
-                            int bISBN = rs.getInt("bISBN");
-                        }
-                        
-			con.con.close();
-		}catch(Exception e){System.out.println(e);}
-        
-		
+        Table booksTable = new Table();
+        booksTable.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        ReturnBooks returnBook = new ReturnBooks();
+        returnBook.setVisible(true);
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        ViewIssuedBooks issuedBooks = new ViewIssuedBooks();
+        issuedBooks.setVisible(true);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        NewBook newBook = new NewBook();
+        newBook.setVisible(true);
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -173,6 +203,8 @@ public class LibrarianOption extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
+
 }
